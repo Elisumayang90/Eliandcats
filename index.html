@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purrfect Palette — Meow &amp; Co. | Cat Breeds &amp; Fun Facts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    // Configure Tailwind with custom pink palette & typography tokens
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blush: '#FFF5F8',
+            petal: '#FFE4EC',
+            bubblegum: '#FF85B3',
+            rosebud: '#F45D9A',
+            magentaSoft: '#E23E82',
+            berry: '#8B1E52',
+            berryDark: '#560D30',
+            creamPink: '#FFF9FB'
+          },
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          },
+          boxShadow: {
+            'pink-card': '0 12px 30px -8px rgba(226, 62, 130, 0.16)',
+            'pink-glow': '0 10px 25px -5px rgba(244, 93, 154, 0.35)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Custom animations, paw trails, flip cards, and cat ear accents */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+
+    @keyframes pawPop {
+      0% { opacity: 0; transform: scale(0.4) translateY(6px); }
+      50% { opacity: 0.75; transform: scale(1.08) translateY(0px); }
+      100% { opacity: 0; transform: scale(0.9) translateY(-8px); }
+    }
+
+    @keyframes wiggleEar {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-6deg); }
+      75% { transform: rotate(6deg); }
+    }
+
+    .animate-float-slow {
+      animation: floatSlow 4.5s ease-in-out infinite;
+    }
+
+    .cat-ear-hover:hover .ear-left {
+      animation: wiggleEar 0.5s ease;
+    }
+
+    .cat-ear-hover:hover .ear-right {
+      animation: wiggleEar 0.5s ease 0.1s;
+    }
+
+    /* 3D Flip Card for Fun Facts */
+    .flip-scene {
+      perspective: 1000px;
+    }
+
+    .flip-card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .flip-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-face {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flip-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Decorative subtle dot pattern */
+    .bg-paw-dots {
+      background-image: radial-gradient(#F45D9A 1.1px, transparent 1.1px);
+      background-size: 24px 24px;
+    }
+
+    /* Floating paw print effect when Purr Mode / Paw Toggle is active */
+    .paw-burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 60;
+      animation: pawPop 1.1s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-blush text-berryDark font-sans antialiased selection:bg-bubblegum selection:text-white overflow-x-hidden">
+
+  <!-- Toast / Status Notification Banner (replaces alert/confirm) -->
+  <div id="toastBanner" role="status" aria-live="polite"
+       class="fixed bottom-5 right-5 z-50 max-w-sm translate-y-24 opacity-0 transition-all duration-300 bg-berry text-white px-4 py-3 rounded-2xl shadow-xl border border-bubblegum/40 flex items-center gap-3">
+    <span class="text-xl" aria-hidden="true">🐾</span>
+    <p id="toastMessage" class="text-sm font-medium leading-snug"></p>
+  </div>
+
+  <!-- 1. STICKY TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-petal shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-18">
+        <!-- Brand Logo with Cat Ear Motif -->
+        <a href="#top" class="cat-ear-hover flex items-center gap-2.5 group focus:outline-none">
+          <div class="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-bubblegum to-magentaSoft flex items-center justify-center text-white shadow-md">
+            <svg class="w-6 h-6" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path class="ear-left" d="M7 14L9 5L16 10" fill="currentColor"/>
+              <path class="ear-right" d="M29 14L27 5L20 10" fill="currentColor"/>
+              <ellipse cx="18" cy="20" rx="11" ry="9.5" fill="currentColor"/>
+              <circle cx="14" cy="19" r="1.5" fill="#560D30"/>
+              <circle cx="22" cy="19" r="1.5" fill="#560D30"/>
+              <path d="M16.5 22.5L18 24L19.5 22.5" stroke="#560D30" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="leading-tight">
+            <span class="font-display font-bold text-lg sm:text-xl text-berry tracking-tight block">
+              Purrfect Palette
+            </span>
+            <span class="text-[11px] font-semibold uppercase tracking-widest text-rosebud block">
+              Meow &amp; Co.
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-berry">
+          <a href="#breeds" class="hover:text-magentaSoft transition-colors py-1">Breeds</a>
+          <a href="#fun-facts" class="hover:text-magentaSoft transition-colors py-1">Fun Facts</a>
+          <a href="#quiz" class="hover:text-magentaSoft transition-colors py-1">Breed Quiz</a>
+        </nav>
+
+        <!-- Paw Trail Toggle + Mobile Menu Button -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button id="pawToggleBtn" type="button" aria-pressed="false"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-petal hover:bg-bubblegum/30 text-berry border border-bubblegum/50 transition-all cursor-pointer active:scale-95"
+                  title="Toggle playful paw prints & gentle purr sound">
+            <span id="pawToggleIcon" aria-hidden="true">🐾</span>
+            <span id="pawToggleLabel">Paw Mode: Off</span>
+          </button>
+
+          <button id="mobileMenuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu"
+                  class="md:hidden p-2.5 rounded-xl bg-petal text-berry hover:bg-bubblegum/30 transition-colors cursor-pointer"
+                  aria-label="Toggle navigation menu">
+            <svg id="menuOpenIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg id="menuCloseIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="hidden md:hidden pb-4 pt-2 border-t border-petal space-y-1">
+        <a href="#breeds" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-semibold text-berry hover:bg-petal transition-colors">
+          🐱 Different Cat Breeds
+        </a>
+        <a href="#fun-facts" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-semibold text-berry hover:bg-petal transition-colors">
+          ✨ Fun Facts &amp; Trivia
+        </a>
+        <a href="#quiz" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-semibold text-berry hover:bg-petal transition-colors">
+          💖 Cat Vibe &amp; Breed Quiz
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section id="top" class="relative overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24 bg-gradient-to-b from-petal/75 via-blush to-blush">
+    <div class="absolute inset-0 bg-paw-dots opacity-15 pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <!-- Hero Copy -->
+        <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-bubblegum/50 text-berry text-xs sm:text-sm font-semibold shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-magentaSoft animate-pulse"></span>
+            <span>Cozy Whiskers, Velvet Paws &amp; Distinct Personalities</span>
+          </div>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-berryDark leading-[1.1] tracking-tight">
+            Discover Every Shade of <span class="text-transparent bg-clip-text bg-gradient-to-r from-rosebud via-magentaSoft to-berry">Feline Charm</span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-berry/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Welcome to <strong>Purrfect Palette</strong> by Meow &amp; Co. Explore lovable cat breeds from cloud-soft Ragdolls and folded-ear Scottish Folds to energetic Bengals, browse surprising feline facts, and match with your ideal kitty vibe.
+          </p>
+
+          <!-- Call-to-Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-1">
+            <a href="#breeds"
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-rosebud to-magentaSoft hover:from-magentaSoft hover:to-berry text-white font-semibold shadow-pink-glow transition-all active:scale-95">
+              <span>Explore Breeds</span>
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="#quiz"
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white hover:bg-petal text-berry font-semibold border-2 border-bubblegum/60 transition-all active:scale-95">
+              <span aria-hidden="true">🎀</span>
+              <span>Take Breed Quiz</span>
+            </a>
+          </div>
+
+          <!-- Quick Highlight Pills -->
+          <div class="grid grid-cols-3 gap-3 pt-4 max-w-md mx-auto lg:mx-0">
+            <div class="bg-white/85 rounded-2xl p-3 border border-petal text-center shadow-sm">
+              <p class="font-display font-bold text-xl sm:text-2xl text-magentaSoft">6+</p>
+              <p class="text-xs font-medium text-berry/75">Iconic Breeds</p>
+            </div>
+            <div class="bg-white/85 rounded-2xl p-3 border border-petal text-center shadow-sm">
+              <p class="font-display font-bold text-xl sm:text-2xl text-magentaSoft">12</p>
+              <p class="text-xs font-medium text-berry/75">Feline Facts</p>
+            </div>
+            <div class="bg-white/85 rounded-2xl p-3 border border-petal text-center shadow-sm">
+              <p class="font-display font-bold text-xl sm:text-2xl text-magentaSoft">100%</p>
+              <p class="text-xs font-medium text-berry/75">Purr Energy</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Hero Showcase Card -->
+        <div class="lg:col-span-5">
+          <div class="animate-float-slow bg-white rounded-3xl p-6 sm:p-7 border-2 border-petal shadow-pink-card relative">
+            <!-- Decorative Ribbon Badge -->
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full bg-petal text-berry text-xs font-bold uppercase tracking-wider">
+                Spotlight Kitty
+              </span>
+              <button id="cycleSpotlightBtn" type="button"
+                      class="text-xs font-semibold text-magentaSoft hover:text-berry underline underline-offset-4 cursor-pointer transition-colors">
+                Shuffle Kitty ↻
+              </button>
+            </div>
+
+            <!-- Spotlight SVG Illustration Container -->
+            <div id="spotlightIllustration" class="w-full h-52 sm:h-56 rounded-2xl bg-gradient-to-br from-blush via-petal/70 to-bubblegum/20 flex items-center justify-center p-4 mb-5 border border-petal/80">
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h2 id="spotlightName" class="font-display text-2xl font-bold text-berryDark">Ragdoll</h2>
+                <p id="spotlightTagline" class="text-sm text-berry/75 mt-0.5">Blue-eyed plush lap sweetheart</p>
+              </div>
+              <button id="spotlightDetailBtn" type="button"
+                      class="shrink-0 px-3.5 py-2 rounded-xl bg-petal hover:bg-bubblegum/35 text-berry text-xs font-bold transition-colors cursor-pointer">
+                Details
+              </button>
+            </div>
+
+            <!-- Interactive Mood Reaction Bar inside Showcase -->
+            <div class="mt-5 pt-4 border-t border-petal flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-berry/75">Boop nose:</span>
+              <div class="flex items-center gap-2">
+                <button id="boopBtn" type="button"
+                        class="px-3.5 py-1.5 rounded-full bg-bubblegum/25 hover:bg-bubblegum/45 text-berry text-xs font-bold transition-all active:scale-90 cursor-pointer">
+                  *Boop!* 🌸 (<span id="boopCount">0</span>)
+                </button>
+                <button id="treatBtn" type="button"
+                        class="px-3.5 py-1.5 rounded-full bg-petal hover:bg-rosebud/20 text-berry text-xs font-bold transition-all active:scale-90 cursor-pointer">
+                  Give Treat 🐟
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. DIFFERENT CAT BREEDS SECTION -->
+  <section id="breeds" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-petal text-berry text-xs font-bold uppercase tracking-wider mb-3">
+        Feline Directory
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-berryDark">
+        Different Cat Breeds
+      </h2>
+      <p class="text-berry/80 mt-2.5 text-sm sm:text-base">
+        Filter by coat style and activity vibe, search by name or trait, and open any breed card for grooming tips and trivia.
+      </p>
+    </div>
+
+    <!-- Filter Tabs + Search Input -->
+    <div class="bg-white rounded-3xl p-4 sm:p-5 border border-petal shadow-sm mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <!-- Category Tabs -->
+      <div id="breedFilterTabs" role="tablist" aria-label="Filter cat breeds by category"
+           class="flex flex-wrap items-center gap-2">
+        <button role="tab" aria-selected="true" data-category="all" type="button"
+                class="breed-tab active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-rosebud to-magentaSoft text-white shadow-sm transition-all cursor-pointer">
+          All Breeds
+        </button>
+        <button role="tab" aria-selected="false" data-category="fluffy" type="button"
+                class="breed-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-petal/70 hover:bg-petal text-berry transition-all cursor-pointer">
+          ☁️ Fluffy &amp; Cozy
+        </button>
+        <button role="tab" aria-selected="false" data-category="sleek" type="button"
+                class="breed-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-petal/70 hover:bg-petal text-berry transition-all cursor-pointer">
+          ⚡ Sleek &amp; Active
+        </button>
+        <button role="tab" aria-selected="false" data-category="quirky" type="button"
+                class="breed-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-petal/70 hover:bg-petal text-berry transition-all cursor-pointer">
+          ✨ Quirky &amp; Rare
+        </button>
+      </div>
+
+      <!-- Search Box -->
+      <div class="relative w-full lg:w-72">
+        <input id="breedSearchInput" type="search" placeholder="Search breed or trait..."
+               aria-label="Search cat breeds"
+               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-blush border border-bubblegum/40 focus:border-magentaSoft focus:outline-none text-sm text-berryDark placeholder:text-berry/50 transition-colors" />
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-rosebud text-sm pointer-events-none" aria-hidden="true">🔍</span>
+      </div>
+    </div>
+
+    <!-- Breed Cards Grid -->
+    <div id="breedsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+      <!-- Cards rendered dynamically via JS -->
+    </div>
+
+    <!-- Empty Search State -->
+    <div id="noBreedsFound" class="hidden text-center py-14 px-6 bg-white rounded-3xl border border-petal mt-6">
+      <p class="text-4xl mb-2" aria-hidden="true">😿</p>
+      <h3 class="font-display text-xl font-bold text-berryDark">No matching kitties found</h3>
+      <p class="text-sm text-berry/75 mt-1 mb-4">Try clearing your search or switching to another category tab.</p>
+      <button id="resetBreedsBtn" type="button"
+              class="px-5 py-2.5 rounded-xl bg-rosebud text-white text-sm font-semibold hover:bg-magentaSoft transition-colors cursor-pointer">
+        Show All Breeds
+      </button>
+    </div>
+  </section>
+
+  <!-- 4. FUN FACTS SECTION ("DID YOU KNOW?") -->
+  <section id="fun-facts" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-petal/45 via-petal/30 to-blush">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+        <div>
+          <span class="inline-block px-3.5 py-1 rounded-full bg-white text-berry text-xs font-bold uppercase tracking-wider mb-3 border border-petal">
+            Did You Know?
+          </span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-berryDark">
+            Feline Fun Facts
+          </h2>
+          <p class="text-berry/80 mt-2 text-sm sm:text-base max-w-xl">
+            Click any card to flip it over for extra details, filter by topic, or spin up a random whisker-worthy fact!
+          </p>
+        </div>
+
+        <button id="randomFactBtn" type="button"
+                class="self-start md:self-auto inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-berry to-magentaSoft hover:from-magentaSoft hover:to-rosebud text-white text-sm font-semibold shadow-md transition-all active:scale-95 cursor-pointer">
+          <span aria-hidden="true">🎲</span>
+          <span>Next Random Fact</span>
+        </button>
+      </div>
+
+      <!-- Random Fact Spotlight Banner -->
+      <div id="randomFactBanner" class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-bubblegum/50 shadow-pink-card mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-3.5">
+          <span class="text-2xl sm:text-3xl shrink-0 bg-petal p-2.5 rounded-2xl" aria-hidden="true">💡</span>
+          <div>
+            <span id="randomFactTopic" class="text-[11px] font-bold uppercase tracking-widest text-magentaSoft">
+              WHISKERS
+            </span>
+            <p id="randomFactText" class="text-berryDark font-semibold text-sm sm:text-base mt-0.5 leading-relaxed">
+              Whiskers are deeply rooted sensory organs that help cats judge whether they can fit through narrow spaces and detect subtle air currents.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fact Topic Filter Pills -->
+      <div id="factTopicFilters" class="flex flex-wrap items-center gap-2 mb-8">
+        <button data-topic="all" type="button"
+                class="fact-topic-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-berry text-white cursor-pointer transition-colors">
+          All Topics
+        </button>
+        <button data-topic="whiskers" type="button"
+                class="fact-topic-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-white hover:bg-petal text-berry border border-petal cursor-pointer transition-colors">
+          Whiskers
+        </button>
+        <button data-topic="purring" type="button"
+                class="fact-topic-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-white hover:bg-petal text-berry border border-petal cursor-pointer transition-colors">
+          Purring
+        </button>
+        <button data-topic="naps" type="button"
+                class="fact-topic-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-white hover:bg-petal text-berry border border-petal cursor-pointer transition-colors">
+          Naps
+        </button>
+        <button data-topic="communication" type="button"
+                class="fact-topic-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-white hover:bg-petal text-berry border border-petal cursor-pointer transition-colors">
+          Communication
+        </button>
+        <button data-topic="history" type="button"
+                class="fact-topic-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-white hover:bg-petal text-berry border border-petal cursor-pointer transition-colors">
+          History
+        </button>
+      </div>
+
+      <!-- Interactive Flip Cards Grid -->
+      <div id="factsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. INTERACTIVE FIND YOUR MATCH / CAT VIBE QUIZ -->
+  <section id="quiz" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div class="bg-white rounded-3xl p-6 sm:p-10 border-2 border-petal shadow-pink-card">
+      <div class="text-center max-w-xl mx-auto mb-8">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-petal text-berry text-xs font-bold uppercase tracking-wider mb-3">
+          Interactive Matchmaker
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-berryDark">
+          Find Your Cat Vibe Match
+        </h2>
+        <p class="text-berry/80 mt-2 text-sm sm:text-base">
+          Pick your ideal weekend vibe, coat preference, and energy level to discover which cat breed matches your personality best!
+        </p>
+      </div>
+
+      <!-- Quiz Questions Container -->
+      <div id="quizForm" class="space-y-7">
+        <!-- Question 1 -->
+        <div>
+          <label class="block font-display font-bold text-berry text-lg mb-3">
+            1. What’s your ideal cozy afternoon?
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-q="vibe">
+            <button type="button" data-value="cozy"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">🛋️</span>
+              <span class="font-bold text-sm text-berryDark block">Cuddle &amp; Lounging</span>
+              <span class="text-xs text-berry/70">Blankets, tea, and slow mornings</span>
+            </button>
+            <button type="button" data-value="playful"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">🧶</span>
+              <span class="font-bold text-sm text-berryDark block">Adventures &amp; Games</span>
+              <span class="text-xs text-berry/70">Climbing, puzzle toys, and zoomies</span>
+            </button>
+            <button type="button" data-value="quirky"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">✨</span>
+              <span class="font-bold text-sm text-berryDark block">Unique &amp; Expressive</span>
+              <span class="text-xs text-berry/70">Quirky habits and main-character charm</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div>
+          <label class="block font-display font-bold text-berry text-lg mb-3">
+            2. How much grooming &amp; coat texture do you love?
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-q="coat">
+            <button type="button" data-value="plush"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">☁️</span>
+              <span class="font-bold text-sm text-berryDark block">Luxurious &amp; Fluffy</span>
+              <span class="text-xs text-berry/70">Silky ruffs and soft fur</span>
+            </button>
+            <button type="button" data-value="sleek"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">🐆</span>
+              <span class="font-bold text-sm text-berryDark block">Smooth &amp; Patterned</span>
+              <span class="text-xs text-berry/70">Low-fuss sleek or spotted coats</span>
+            </button>
+            <button type="button" data-value="distinctive"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">🍑</span>
+              <span class="font-bold text-sm text-berryDark block">One-of-a-Kind Look</span>
+              <span class="text-xs text-berry/70">Folded ears or velvety suede skin</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div>
+          <label class="block font-display font-bold text-berry text-lg mb-3">
+            3. Pick your favorite feline trait:
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-q="trait">
+            <button type="button" data-value="gentle"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">💕</span>
+              <span class="font-bold text-sm text-berryDark block">Sweet &amp; Devoted</span>
+              <span class="text-xs text-berry/70">Follows you room to room</span>
+            </button>
+            <button type="button" data-value="curious"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">🌟</span>
+              <span class="font-bold text-sm text-berryDark block">Clever &amp; Chatty</span>
+              <span class="text-xs text-berry/70">Curious about every sound</span>
+            </button>
+            <button type="button" data-value="chill"
+                    class="quiz-opt p-4 rounded-2xl border-2 border-petal hover:border-bubblegum bg-blush/60 text-left transition-all cursor-pointer">
+              <span class="text-xl block mb-1" aria-hidden="true">🌸</span>
+              <span class="font-bold text-sm text-berryDark block">Calm &amp; Charming</span>
+              <span class="text-xs text-berry/70">Poised, affectionate, and easygoing</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button id="revealMatchBtn" type="button"
+                  class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-rosebud to-magentaSoft hover:from-magentaSoft hover:to-berry text-white font-bold shadow-pink-glow transition-all active:scale-95 cursor-pointer">
+            Reveal My Cat Match ✨
+          </button>
+          <button id="resetQuizBtn" type="button"
+                  class="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-petal hover:bg-bubblegum/30 text-berry font-semibold transition-colors cursor-pointer">
+            Reset Choices
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Result Card (Hidden until submitted) -->
+      <div id="quizResultBox" class="hidden mt-8 pt-8 border-t-2 border-dashed border-bubblegum/50">
+        <div class="bg-gradient-to-br from-blush via-petal/65 to-bubblegum/20 rounded-3xl p-6 sm:p-8 border border-bubblegum/40 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div id="quizResultArt" class="md:col-span-4 flex items-center justify-center bg-white/90 rounded-2xl p-4 h-48 border border-petal">
+            <!-- Populated via JS -->
+          </div>
+          <div class="md:col-span-8 space-y-3 text-center md:text-left">
+            <span class="inline-block px-3 py-1 rounded-full bg-white text-magentaSoft text-xs font-bold uppercase tracking-wider">
+              Your Purrfect Match
+            </span>
+            <h3 id="quizMatchTitle" class="font-display text-2xl sm:text-3xl font-bold text-berryDark"></h3>
+            <p id="quizMatchReason" class="text-sm sm:text-base text-berry/85 leading-relaxed"></p>
+            <div class="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-3">
+              <button id="quizInspectBreedBtn" type="button"
+                      class="px-4 py-2.5 rounded-xl bg-berry hover:bg-berryDark text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer">
+                View Full Breed Guide
+              </button>
+              <button id="quizRetakeBtn" type="button"
+                      class="px-4 py-2.5 rounded-xl bg-white hover:bg-petal text-berry text-xs sm:text-sm font-semibold border border-bubblegum/50 transition-colors cursor-pointer">
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FOOTER WITH CAT MOTIFS & BACK-TO-TOP -->
+  <footer class="bg-berry text-white pt-12 pb-8 px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/15">
+        <div class="flex items-center gap-3 text-center md:text-left">
+          <span class="w-11 h-11 rounded-2xl bg-bubblegum/25 border border-bubblegum/40 flex items-center justify-center text-2xl" aria-hidden="true">
+            🐱
+          </span>
+          <div>
+            <p class="font-display font-bold text-xl tracking-tight">Purrfect Palette — Meow &amp; Co.</p>
+            <p class="text-xs sm:text-sm text-petal/85">Celebrating adorable cat breeds, cozy naps, and curious whiskers.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-medium text-petal">
+          <a href="#breeds" class="hover:text-white transition-colors">Breeds</a>
+          <span aria-hidden="true">•</span>
+          <a href="#fun-facts" class="hover:text-white transition-colors">Fun Facts</a>
+          <span aria-hidden="true">•</span>
+          <a href="#quiz" class="hover:text-white transition-colors">Breed Quiz</a>
+          <button id="backToTopBtn" type="button"
+                  class="ml-1 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-bubblegum hover:bg-rosebud text-berryDark font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer">
+            <span>Back to Top</span>
+            <span aria-hidden="true">↑</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-petal/75">
+        <p>Made with pink sprinkles &amp; paw prints by Purrfect Palette.</p>
+        <p>🐾 Meow responsibly &amp; keep your kitties cozy.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BREED DETAILS MODAL -->
+  <div id="breedModal" role="dialog" aria-modal="true" aria-labelledby="modalBreedName"
+       class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-berryDark/60 backdrop-blur-xs">
+    <div class="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto border-2 border-petal shadow-2xl p-6 sm:p-8 relative">
+      <button id="closeModalBtn" type="button" aria-label="Close breed details"
+              class="absolute top-4 right-4 w-9 h-9 rounded-full bg-petal hover:bg-bubblegum/40 text-berry font-bold flex items-center justify-center transition-colors cursor-pointer">
+        ✕
+      </button>
+
+      <div class="flex flex-col sm:flex-row items-center gap-5 mb-6">
+        <div id="modalBreedArt" class="w-32 h-32 rounded-2xl bg-gradient-to-br from-blush to-petal flex items-center justify-center p-2 shrink-0 border border-petal">
+          <!-- Populated via JS -->
+        </div>
+        <div class="text-center sm:text-left">
+          <span id="modalBreedCategory" class="inline-block px-3 py-0.5 rounded-full bg-petal text-berry text-xs font-bold uppercase tracking-wider mb-1"></span>
+          <h3 id="modalBreedName" class="font-display text-2xl sm:text-3xl font-bold text-berryDark"></h3>
+          <p id="modalBreedOrigin" class="text-xs sm:text-sm text-berry/75 font-medium mt-0.5"></p>
+        </div>
+      </div>
+
+      <p id="modalBreedDesc" class="text-sm sm:text-base text-berry/85 leading-relaxed mb-5"></p>
+
+      <!-- Trait Meters inside Modal -->
+      <div id="modalBreedMeters" class="space-y-3 bg-blush/70 p-4 rounded-2xl border border-petal mb-5">
+        <!-- Populated via JS -->
+      </div>
+
+      <!-- Care Tips & Fun Trivia -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-petal/45 rounded-2xl p-4 border border-petal">
+          <h4 class="font-display font-bold text-berry text-sm mb-1.5">🪮 Care &amp; Grooming Tip</h4>
+          <p id="modalBreedCare" class="text-xs sm:text-sm text-berry/85 leading-relaxed"></p>
+        </div>
+        <div class="bg-bubblegum/15 rounded-2xl p-4 border border-bubblegum/35">
+          <h4 class="font-display font-bold text-berry text-sm mb-1.5">🎀 Did You Know?</h4>
+          <p id="modalBreedTrivia" class="text-xs sm:text-sm text-berry/85 leading-relaxed"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Purrfect Palette — Meow & Co. Application Data & Interactive Logic
+     * Organized cleanly into:
+     * 1. Inline SVG Cat Illustrations per Breed
+     * 2. Cat Breeds Dataset
+     * 3. Cat Fun Facts Dataset
+     * 4. UI Rendering, Filtering, Quiz Engine, Modal & Paw Mode
+     */
+
+    // 1. Custom Inline SVG Art Generator for each Cat Breed
+    function getBreedSvg(id) {
+      const svgs = {
+        ragdoll: `
+          <svg viewBox="0 0 180 150" class="w-full h-full max-w-[175px]" role="img" aria-label="Illustrated Ragdoll cat">
+            <ellipse cx="90" cy="126" rx="46" ry="11" fill="#FFD6E6" opacity="0.7"/>
+            <path d="M48 112 C24 106, 22 76, 40 72" stroke="#F49AC2" stroke-width="11" stroke-linecap="round" fill="none"/>
+            <ellipse cx="90" cy="96" rx="34" ry="28" fill="#FFFDF9" stroke="#E8B4CB" stroke-width="2.5"/>
+            <path d="M62 76 L56 42 L84 62 Z" fill="#8B5E77"/>
+            <path d="M118 76 L124 42 L96 62 Z" fill="#8B5E77"/>
+            <path d="M64 72 L60 49 L80 63 Z" fill="#FF9EC4"/>
+            <path d="M116 72 L120 49 L100 63 Z" fill="#FF9EC4"/>
+            <ellipse cx="90" cy="74" rx="28" ry="23" fill="#FFFDF9" stroke="#E8B4CB" stroke-width="2.5"/>
+            <path d="M66 64 Q90 52 114 64 L110 74 Q90 66 70 74 Z" fill="#8B5E77"/>
+            <circle cx="79" cy="74" r="5" fill="#4FC3F7"/>
+            <circle cx="101" cy="74" r="5" fill="#4FC3F7"/>
+            <circle cx="79" cy="74" r="2.2" fill="#1A237E"/>
+            <circle cx="101" cy="74" r="2.2" fill="#1A237E"/>
+            <polygon points="87,80 93,80 90,84" fill="#FF6FA5"/>
+            <path d="M84 86 Q90 91 96 86" stroke="#8B5E77" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <line x1="54" y1="77" x2="70" y2="79" stroke="#B0849B" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="53" y1="83" x2="70" y2="83" stroke="#B0849B" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="110" y1="79" x2="126" y2="77" stroke="#B0849B" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="110" y1="83" x2="127" y2="83" stroke="#B0849B" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>`,
+        scottishfold: `
+          <svg viewBox="0 0 180 150" class="w-full h-full max-w-[175px]" role="img" aria-label="Illustrated Scottish Fold cat">
+            <ellipse cx="90" cy="126" rx="44" ry="10" fill="#FFD6E6" opacity="0.7"/>
+            <ellipse cx="90" cy="96" rx="34" ry="27" fill="#F6D5E5" stroke="#C989A8" stroke-width="2.5"/>
+            <path d="M62 66 C54 52, 68 46, 82 58 Z" fill="#D99AB8" stroke="#C989A8" stroke-width="2"/>
+            <path d="M118 66 C126 52, 112 46, 98 58 Z" fill="#D99AB8" stroke="#C989A8" stroke-width="2"/>
+            <path d="M64 64 C59 55, 68 51, 78 59 Z" fill="#FF85B3"/>
+            <path d="M116 64 C121 55, 112 51, 102 59 Z" fill="#FF85B3"/>
+            <circle cx="90" cy="76" r="27" fill="#F9E0EC" stroke="#C989A8" stroke-width="2.5"/>
+            <circle cx="79" cy="75" r="5.5" fill="#FFB300"/>
+            <circle cx="101" cy="75" r="5.5" fill="#FFB300"/>
+            <circle cx="79" cy="75" r="2.4" fill="#3E2723"/>
+            <circle cx="101" cy="75" r="2.4" fill="#3E2723"/>
+            <circle cx="71" cy="82" r="4" fill="#FF85B3" opacity="0.5"/>
+            <circle cx="109" cy="82" r="4" fill="#FF85B3" opacity="0.5"/>
+            <polygon points="87,81 93,81 90,85" fill="#FF5C93"/>
+            <path d="M84 87 Q90 91 96 87" stroke="#7A4960" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>`,
+        bengal: `
+          <svg viewBox="0 0 180 150" class="w-full h-full max-w-[175px]" role="img" aria-label="Illustrated Bengal cat">
+            <ellipse cx="90" cy="126" rx="44" ry="10" fill="#FFD6E6" opacity="0.7"/>
+            <path d="M122 108 C146 102, 152 72, 136 64" stroke="#F5A65B" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <ellipse cx="90" cy="96" rx="32" ry="27" fill="#FFC98B" stroke="#D98236" stroke-width="2.5"/>
+            <ellipse cx="76" cy="96" rx="5.5" ry="3.5" fill="#8D4004" opacity="0.75"/>
+            <ellipse cx="104" cy="98" rx="5.5" ry="3.5" fill="#8D4004" opacity="0.75"/>
+            <ellipse cx="90" cy="108" rx="6" ry="3.5" fill="#8D4004" opacity="0.75"/>
+            <path d="M63 72 L57 44 L83 60 Z" fill="#F5A65B" stroke="#D98236" stroke-width="2"/>
+            <path d="M117 72 L123 44 L97 60 Z" fill="#F5A65B" stroke="#D98236" stroke-width="2"/>
+            <ellipse cx="90" cy="74" rx="26" ry="22" fill="#FFD4A3" stroke="#D98236" stroke-width="2.5"/>
+            <path d="M86 53 L90 62 L94 53" stroke="#8D4004" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="79" cy="73" r="4.8" fill="#8BC34A"/>
+            <ellipse cx="101" cy="73" r="4.8" fill="#8BC34A"/>
+            <circle cx="79" cy="73" r="2" fill="#1B5E20"/>
+            <circle cx="101" cy="73" r="2" fill="#1B5E20"/>
+            <polygon points="87,79 93,79 90,83" fill="#FF7AA2"/>
+            <path d="M84 85 Q90 89 96 85" stroke="#6D351A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>`,
+        sphynx: `
+          <svg viewBox="0 0 180 150" class="w-full h-full max-w-[175px]" role="img" aria-label="Illustrated Sphynx cat">
+            <ellipse cx="90" cy="126" rx="42" ry="10" fill="#FFD6E6" opacity="0.7"/>
+            <ellipse cx="90" cy="96" rx="31" ry="27" fill="#FFC2D9" stroke="#E26D9C" stroke-width="2.5"/>
+            <path d="M62 74 L48 40 L82 60 Z" fill="#FFB3D0" stroke="#E26D9C" stroke-width="2.2"/>
+            <path d="M118 74 L132 40 L98 60 Z" fill="#FFB3D0" stroke="#E26D9C" stroke-width="2.2"/>
+            <path d="M65 70 L55 48 L79 62 Z" fill="#FF85B3"/>
+            <path d="M115 70 L125 48 L101 62 Z" fill="#FF85B3"/>
+            <ellipse cx="90" cy="75" rx="25" ry="23" fill="#FFC8DD" stroke="#E26D9C" stroke-width="2.5"/>
+            <path d="M78 58 Q90 63 102 58" stroke="#E26D9C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <ellipse cx="79" cy="74" rx="5.5" ry="4.5" fill="#A5D6A7"/>
+            <ellipse cx="101" cy="74" rx="5.5" ry="4.5" fill="#A5D6A7"/>
+            <circle cx="79" cy="74" r="2.2" fill="#2E7D32"/>
+            <circle cx="101" cy="74" r="2.2" fill="#2E7D32"/>
+            <polygon points="87,80 93,80 90,84" fill="#FF5C93"/>
+            <path d="M84 86 Q90 90 96 86" stroke="#8B1E52" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>`,
+        mainecoon: `
+          <svg viewBox="0 0 180 150" class="w-full h-full max-w-[175px]" role="img" aria-label="Illustrated Maine Coon cat">
+            <ellipse cx="90" cy="127" rx="48" ry="10" fill="#FFD6E6" opacity="0.7"/>
+            <path d="M46 112 C20 108, 16 70, 38 62" stroke="#D47A9E" stroke-width="14" stroke-linecap="round" fill="none"/>
+            <ellipse cx="90" cy="96" rx="37" ry="29" fill="#F7C6DA" stroke="#B85D82" stroke-width="2.5"/>
+            <path d="M60 72 L52 34 L82 58 Z" fill="#E39BB8" stroke="#B85D82" stroke-width="2.2"/>
+            <path d="M120 72 L128 34 L98 58 Z" fill="#E39BB8" stroke="#B85D82" stroke-width="2.2"/>
+            <line x1="52" y1="34" x2="49" y2="27" stroke="#8B1E52" stroke-width="2" stroke-linecap="round"/>
+            <line x1="128" y1="34" x2="131" y2="27" stroke="#8B1E52" stroke-width="2" stroke-linecap="round"/>
+            <ellipse cx="90" cy="75" rx="28" ry="23" fill="#FDE2EC" stroke="#B85D82" stroke-width="2.5"/>
+            <circle cx="79" cy="74" r="5" fill="#FBC02D"/>
+            <circle cx="101" cy="74" r="5" fill="#FBC02D"/>
+            <circle cx="79" cy="74" r="2.2" fill="#3E2723"/>
+            <circle cx="101" cy="74" r="2.2" fill="#3E2723"/>
+            <polygon points="87,80 93,80 90,84" fill="#FF6FA5"/>
+            <path d="M83 86 Q90 91 97 86" stroke="#8B1E52" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>`,
+        persian: `
+          <svg viewBox="0 0 180 150" class="w-full h-full max-w-[175px]" role="img" aria-label="Illustrated Persian cat">
+            <ellipse cx="90" cy="127" rx="46" ry="10" fill="#FFD6E6" opacity="0.7"/>
+            <circle cx="90" cy="96" r="35" fill="#FFF0F6" stroke="#E5A9C4" stroke-width="2.5"/>
+            <circle cx="62" cy="64" r="11" fill="#FFF0F6" stroke="#E5A9C4" stroke-width="2.5"/>
+            <circle cx="118" cy="64" r="11" fill="#FFF0F6" stroke="#E5A9C4" stroke-width="2.5"/>
+            <circle cx="63" cy="65" r="6" fill="#FF9EC4"/>
+            <circle cx="117" cy="65" r="6" fill="#FF9EC4"/>
+            <ellipse cx="90" cy="78" rx="31" ry="24" fill="#FFF8FB" stroke="#E5A9C4" stroke-width="2.5"/>
+            <circle cx="78" cy="76" r="5.5" fill="#FF9800"/>
+            <circle cx="102" cy="76" r="5.5" fill="#FF9800"/>
+            <circle cx="78" cy="76" r="2.4" fill="#4E342E"/>
+            <circle cx="102" cy="76" r="2.4" fill="#4E342E"/>
+            <ellipse cx="90" cy="82" rx="4.5" ry="3" fill="#FF6FA5"/>
+            <path d="M84 88 Q90 92 96 88" stroke="#9C5A79" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>`
+      };
+      return svgs[id] || svgs.ragdoll;
+    }
+
+    // 2. Cat Breeds Dataset
+    const breedsData = [
+      {
+        id: 'ragdoll',
+        name: 'Ragdoll',
+        category: 'fluffy',
+        categoryLabel: 'Fluffy & Cozy',
+        tagline: 'Limply affectionate lap cloud with striking blue eyes',
+        origin: 'Origin: California, USA',
+        description: 'Famous for melting into their favorite human’s arms like a plush ragdoll, Ragdolls have semi-long silky coats, colorpoint markings, and gentle, patient temperaments.',
+        temperament: ['Gentle', 'Affectionate', 'Calm'],
+        stats: { coat: 85, energy: 40, affection: 98 },
+        careTip: 'Brush two to three times a week with a metal comb or slicker brush to keep their silky coat tangle-free.',
+        trivia: 'Ragdolls are slow to mature and can take up to four years to reach full size and complete coat color.'
+      },
+      {
+        id: 'scottishfold',
+        name: 'Scottish Fold',
+        category: 'quirky',
+        categoryLabel: 'Quirky & Rare',
+        tagline: 'Sweet owl-eyed charmer with signature folded ears',
+        origin: 'Origin: Scotland, UK',
+        description: 'Recognized immediately by forward-folded ears and round cheeks, Scottish Folds are sweet-natured companions known for sitting upright in a "Buddha pose."',
+        temperament: ['Sweet', 'Playful', 'Adaptable'],
+        stats: { coat: 55, energy: 55, affection: 90 },
+        careTip: 'Check and gently clean folded ears regularly as recommended by your vet, and brush weekly.',
+        trivia: 'All Scottish Folds trace back to Susie, a white barn cat with folded ears discovered in 1961.'
+      },
+      {
+        id: 'bengal',
+        name: 'Bengal',
+        category: 'sleek',
+        categoryLabel: 'Sleek & Active',
+        tagline: 'Athletic mini-leopard with glitter-tipped spotted fur',
+        origin: 'Origin: United States',
+        description: 'Active, brainy, and energetic, Bengals boast wild-inspired rosettes or marbling and love high perches, puzzle feeders, and interactive play sessions.',
+        temperament: ['Energetic', 'Curious', 'Athletic'],
+        stats: { coat: 35, energy: 96, affection: 82 },
+        careTip: 'Provide tall cat trees, daily wand/fetch play, and mental enrichment to channel their high energy.',
+        trivia: 'Many Bengals are fascinated by running water and might even join you near the sink!'
+      },
+      {
+        id: 'sphynx',
+        name: 'Sphynx',
+        category: 'quirky',
+        categoryLabel: 'Quirky & Rare',
+        tagline: 'Warm peach-fuzz extrovert with oversized bat ears',
+        origin: 'Origin: Ontario, Canada',
+        description: 'Often described as feeling like warm chamois or soft peaches, Sphynx cats crave human warmth, snuggle under blankets, and act like cheerful clowns.',
+        temperament: ['Outgoing', 'Mischievous', 'Warm'],
+        stats: { coat: 10, energy: 80, affection: 96 },
+        careTip: 'Give periodic gentle baths or wipe-downs to clear natural skin oils, and keep cozy sweaters handy.',
+        trivia: 'Despite looking hairless, Sphynx cats usually wear a fine layer of soft down—and sometimes faint whiskers.'
+      },
+      {
+        id: 'mainecoon',
+        name: 'Maine Coon',
+        category: 'fluffy',
+        categoryLabel: 'Fluffy & Cozy',
+        tagline: 'Gentle giant with tufted ears and a plume tail',
+        origin: 'Origin: Maine, USA',
+        description: 'One of the largest domesticated cat breeds, Maine Coons combine rugged weather-resistant fur with chirping trills, dog-like loyalty, and playful curiosity.',
+        temperament: ['Friendly', 'Smart', 'Gentle Giant'],
+        stats: { coat: 90, energy: 68, affection: 88 },
+        careTip: 'Regular brushing prevents mats around the ruff and belly, especially during seasonal shedding.',
+        trivia: 'Maine Coons often communicate with soft chirps and trills rather than standard meows.'
+      },
+      {
+        id: 'persian',
+        name: 'Persian',
+        category: 'fluffy',
+        categoryLabel: 'Fluffy & Cozy',
+        tagline: 'Classic plush royalty with serene, dreamy eyes',
+        origin: 'Origin: Greater Iran (Persia)',
+        description: 'Poised and serene, Persians adore peaceful rooms, soft cushions, and gentle attention, bringing timeless elegance to cozy homes.',
+        temperament: ['Serene', 'Loyal', 'Cozy'],
+        stats: { coat: 95, energy: 30, affection: 86 },
+        careTip: 'Daily combing prevents knots in their dense double coat, and gentle face wiping keeps eyes tidy.',
+        trivia: 'Persians have ranked among the most popular cat breeds for decades thanks to their plush look and calm spirit.'
+      }
+    ];
+
+    // 3. Cat Fun Facts Dataset
+    const factsData = [
+      {
+        topic: 'whiskers',
+        topicLabel: 'Whiskers',
+        front: 'Whiskers act like built-in radar sensors.',
+        back: 'Whisker tips contain specialized receptors called proprioceptors that sense air shifts and help cats judge tight spaces.'
+      },
+      {
+        topic: 'whiskers',
+        topicLabel: 'Whiskers',
+        front: 'Cats rarely have whiskers only on their cheeks.',
+        back: 'They also have shorter sensory bristles above their eyes and near the back of their front legs to sense nearby prey.'
+      },
+      {
+        topic: 'purring',
+        topicLabel: 'Purring',
+        front: 'Purring happens during both inhaling and exhaling.',
+        back: 'By oscillating vocal cord and diaphragm muscles smoothly, cats maintain a steady purr across every breath.'
+      },
+      {
+        topic: 'purring',
+        topicLabel: 'Purring',
+        front: 'Cats sometimes purr when resting or recovering.',
+        back: 'Low-frequency purr vibrations are associated with soothing comfort and calm self-regulation.'
+      },
+      {
+        topic: 'naps',
+        topicLabel: 'Naps',
+        front: 'Cats can sleep 12 to 16+ hours a day.',
+        back: 'Conserving energy in short bursts and sunbeams is a classic feline habit—even when their day only involves toy mice!'
+      },
+      {
+        topic: 'naps',
+        topicLabel: 'Naps',
+        front: 'Cats curl into tight balls to stay warm.',
+        back: 'Curling up tucks in their nose and paws while protecting vital organs and retaining body heat.'
+      },
+      {
+        topic: 'communication',
+        topicLabel: 'Communication',
+        front: 'A slow blink is like a feline smile.',
+        back: 'Slowly closing and opening their eyes signals trust and relaxation—try slow-blinking back at a friendly cat!'
+      },
+      {
+        topic: 'communication',
+        topicLabel: 'Communication',
+        front: 'A question-mark tail means a playful mood.',
+        back: 'An upright tail with a curved tip often shows a friendly, curious greeting when a cat approaches you.'
+      },
+      {
+        topic: 'history',
+        topicLabel: 'History',
+        front: 'Cats have lived alongside humans for thousands of years.',
+        back: 'Early partnerships began around grain stores where clever wildcats helped keep pests away, earning welcomed status.'
+      },
+      {
+        topic: 'history',
+        topicLabel: 'History',
+        front: 'Ancient Egypt celebrated cats in art and daily life.',
+        back: 'Cats were cherished household companions and revered figures in ancient Egyptian culture.'
+      },
+      {
+        topic: 'purring',
+        topicLabel: 'Purring',
+        front: 'Every cat has their own purr rhythm.',
+        back: 'Just like meows, a cat’s purr tone and frequency can shift slightly depending on excitement or relaxation.'
+      },
+      {
+        topic: 'naps',
+        topicLabel: 'Naps',
+        front: 'Cats chase sunbeams across the floor.',
+        back: 'Because a cat’s normal body temperature runs slightly warmer than ours, sunny patches are prime nap spots.'
+      }
+    ];
+
+    // Application State
+    const state = {
+      selectedCategory: 'all',
+      searchQuery: '',
+      selectedFactTopic: 'all',
+      spotlightIndex: 0,
+      boopCount: 0,
+      pawMode: false,
+      quizAnswers: { vibe: null, coat: null, trait: null },
+      matchedBreedId: 'ragdoll'
+    };
+
+    // Gentle Web Audio purr synthesizer (no external audio files needed)
+    let audioCtx = null;
+    function playGentlePurr() {
+      try {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) return;
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const lfo = audioCtx.createOscillator();
+        const lfoGain = audioCtx.createGain();
+        const mainGain = audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(52, now);
+
+        lfo.type = 'sine';
+        lfo.frequency.setValueAtTime(24, now);
+        lfoGain.gain.setValueAtTime(8, now);
+
+        mainGain.gain.setValueAtTime(0.001, now);
+        mainGain.gain.exponentialRampToValueAtTime(0.04, now + 0.08);
+        mainGain.gain.exponentialRampToValueAtTime(0.0008, now + 0.45);
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+        osc.connect(mainGain);
+        mainGain.connect(audioCtx.destination);
+
+        osc.start(now);
+        lfo.start(now);
+        osc.stop(now + 0.46);
+        lfo.stop(now + 0.46);
+      } catch (err) {
+        // Ignore audio restrictions silently
+      }
+    }
+
+    // Toast notification helper
+    let toastTimeout = null;
+    function showToast(message) {
+      const banner = document.getElementById('toastBanner');
+      const textEl = document.getElementById('toastMessage');
+      if (!banner || !textEl) return;
+
+      textEl.textContent = message;
+      banner.classList.remove('translate-y-24', 'opacity-0');
+      banner.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.remove('translate-y-0', 'opacity-100');
+        banner.classList.add('translate-y-24', 'opacity-0');
+      }, 2800);
+    }
+
+    // Spawn floating paw print on screen
+    function spawnPawPrint(x, y) {
+      const paw = document.createElement('span');
+      paw.className = 'paw-burst text-xl select-none';
+      paw.textContent = '🐾';
+      paw.style.left = `${x - 10}px`;
+      paw.style.top = `${y - 10}px`;
+      document.body.appendChild(paw);
+      setTimeout(() => paw.remove(), 1100);
+    }
+
+    // Render Spotlight Kitty in Hero
+    function renderSpotlight() {
+      const breed = breedsData[state.spotlightIndex % breedsData.length];
+      const artBox = document.getElementById('spotlightIllustration');
+      const nameEl = document.getElementById('spotlightName');
+      const tagEl = document.getElementById('spotlightTagline');
+
+      if (artBox) artBox.innerHTML = getBreedSvg(breed.id);
+      if (nameEl) nameEl.textContent = breed.name;
+      if (tagEl) tagEl.textContent = breed.tagline;
+    }
+
+    // Render Cat Breed Cards
+    function renderBreeds() {
+      const grid = document.getElementById('breedsGrid');
+      const emptyState = document.getElementById('noBreedsFound');
+      if (!grid || !emptyState) return;
+
+      const query = state.searchQuery.trim().toLowerCase();
+      const filtered = breedsData.filter((breed) => {
+        const matchesCategory = state.selectedCategory === 'all' || breed.category === state.selectedCategory;
+        const matchesQuery =
+          !query ||
+          breed.name.toLowerCase().includes(query) ||
+          breed.tagline.toLowerCase().includes(query) ||
+          breed.description.toLowerCase().includes(query) ||
+          breed.temperament.some((t) => t.toLowerCase().includes(query));
+        return matchesCategory && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = filtered
+        .map(
+          (breed) => `
+          <article class="bg-white rounded-3xl p-5 sm:p-6 border border-petal shadow-pink-card hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-3 py-1 rounded-full bg-petal text-berry text-xs font-bold">
+                  ${breed.categoryLabel}
+                </span>
+                <span class="text-xs font-semibold text-rosebud">♥ ${breed.stats.affection}% Love</span>
+              </div>
+
+              <div class="w-full h-44 rounded-2xl bg-gradient-to-br from-blush via-petal/60 to-bubblegum/15 flex items-center justify-center p-3 mb-4 border border-petal/70">
+                ${getBreedSvg(breed.id)}
+              </div>
+
+              <h3 class="font-display text-2xl font-bold text-berryDark">${breed.name}</h3>
+              <p class="text-xs font-semibold text-rosebud mt-0.5 mb-2.5">${breed.tagline}</p>
+              <p class="text-sm text-berry/80 leading-relaxed mb-4">${breed.description}</p>
+
+              <!-- Temperament Tags -->
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                ${breed.temperament
+                  .map(
+                    (tag) =>
+                      `<span class="px-2.5 py-1 rounded-lg bg-blush border border-petal text-berry text-xs font-semibold">${tag}</span>`
+                  )
+                  .join('')}
+              </div>
+
+              <!-- Visual Trait Bars: Coat, Energy, Affection -->
+              <div class="space-y-2.5 mb-5 text-xs">
+                <div>
+                  <div class="flex justify-between font-semibold text-berry/80 mb-1">
+                    <span>Coat Plushness</span>
+                    <span>${breed.stats.coat}%</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-petal overflow-hidden">
+                    <div class="h-full rounded-full bg-bubblegum" style="width: ${breed.stats.coat}%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-semibold text-berry/80 mb-1">
+                    <span>Playful Energy</span>
+                    <span>${breed.stats.energy}%</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-petal overflow-hidden">
+                    <div class="h-full rounded-full bg-rosebud" style="width: ${breed.stats.energy}%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-semibold text-berry/80 mb-1">
+                    <span>Snuggle Factor</span>
+                    <span>${breed.stats.affection}%</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-petal overflow-hidden">
+                    <div class="h-full rounded-full bg-magentaSoft" style="width: ${breed.stats.affection}%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" data-open-breed="${breed.id}"
+                    class="open-breed-btn w-full py-2.5 px-4 rounded-xl bg-petal hover:bg-gradient-to-r hover:from-rosebud hover:to-magentaSoft text-berry hover:text-white font-bold text-sm transition-all cursor-pointer active:scale-[0.99]">
+              View Details &amp; Care Tips
+            </button>
+          </article>
+        `
+        )
+        .join('');
+
+      // Attach click handlers to View Details buttons
+      grid.querySelectorAll('.open-breed-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-open-breed');
+          openBreedModal(id);
+        });
+      });
+    }
+
+    // Open Breed Details Modal
+    function openBreedModal(breedId) {
+      const breed = breedsData.find((b) => b.id === breedId);
+      const modal = document.getElementById('breedModal');
+      if (!breed || !modal) return;
+
+      document.getElementById('modalBreedArt').innerHTML = getBreedSvg(breed.id);
+      document.getElementById('modalBreedCategory').textContent = breed.categoryLabel;
+      document.getElementById('modalBreedName').textContent = breed.name;
+      document.getElementById('modalBreedOrigin').textContent = breed.origin;
+      document.getElementById('modalBreedDesc').textContent = breed.description;
+      document.getElementById('modalBreedCare').textContent = breed.careTip;
+      document.getElementById('modalBreedTrivia').textContent = breed.trivia;
+
+      document.getElementById('modalBreedMeters').innerHTML = `
+        <div class="flex items-center justify-between text-xs font-bold text-berry">
+          <span>Coat Plushness: ${breed.stats.coat}%</span>
+          <span>Energy: ${breed.stats.energy}%</span>
+          <span>Affection: ${breed.stats.affection}%</span>
+        </div>
+        <div class="w-full h-2.5 rounded-full bg-white overflow-hidden flex">
+          <div class="bg-bubblegum h-full" style="width: ${breed.stats.coat / 3}%"></div>
+          <div class="bg-rosebud h-full" style="width: ${breed.stats.energy / 3}%"></div>
+          <div class="bg-magentaSoft h-full" style="width: ${breed.stats.affection / 3}%"></div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.getElementById('closeModalBtn').focus();
+    }
+
+    function closeBreedModal() {
+      const modal = document.getElementById('breedModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Render Fun Facts Flip Cards
+    function renderFacts() {
+      const grid = document.getElementById('factsGrid');
+      if (!grid) return;
+
+      const list =
+        state.selectedFactTopic === 'all'
+          ? factsData
+          : factsData.filter((f) => f.topic === state.selectedFactTopic);
+
+      grid.innerHTML = list
+        .map(
+          (fact, idx) => `
+          <div class="flip-scene h-52 cursor-pointer" role="button" tabindex="0"
+               aria-label="Flip fun fact card: ${fact.front}">
+            <div class="flip-card w-full h-full rounded-3xl shadow-pink-card">
+              <!-- Front Face -->
+              <div class="flip-face absolute inset-0 bg-white rounded-3xl p-6 border border-petal flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="px-3 py-1 rounded-full bg-petal text-berry text-xs font-bold uppercase tracking-wider">
+                    ${fact.topicLabel}
+                  </span>
+                  <span class="text-xs font-semibold text-rosebud">#${idx + 1}</span>
+                </div>
+                <p class="font-display text-lg font-bold text-berryDark leading-snug">
+                  ${fact.front}
+                </p>
+                <p class="text-xs font-semibold text-magentaSoft">
+                  Tap card to flip for details ↻
+                </p>
+              </div>
+
+              <!-- Back Face -->
+              <div class="flip-face flip-back absolute inset-0 bg-gradient-to-br from-rosebud to-magentaSoft text-white rounded-3xl p-6 flex flex-col justify-between">
+                <span class="text-xs font-bold uppercase tracking-widest text-petal">
+                  Feline Trivia
+                </span>
+                <p class="text-sm sm:text-base font-medium leading-relaxed">
+                  ${fact.back}
+                </p>
+                <span class="text-xs font-semibold text-petal">
+                  Tap again to flip back ↺
+                </span>
+              </div>
+            </div>
+          </div>
+        `
+        )
+        .join('');
+
+      grid.querySelectorAll('.flip-scene').forEach((scene) => {
+        const card = scene.querySelector('.flip-card');
+        const toggleFlip = () => {
+          card.classList.toggle('is-flipped');
+          if (state.pawMode) playGentlePurr();
+        };
+        scene.addEventListener('click', toggleFlip);
+        scene.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleFlip();
+          }
+        });
+      });
+    }
+
+    // Pick a Random Fact for the Top Banner
+    function showRandomFact() {
+      const pool =
+        state.selectedFactTopic === 'all'
+          ? factsData
+          : factsData.filter((f) => f.topic === state.selectedFactTopic);
+      const source = pool.length ? pool : factsData;
+      const chosen = source[Math.floor(Math.random() * source.length)];
+
+      document.getElementById('randomFactTopic').textContent = chosen.topicLabel.toUpperCase();
+      document.getElementById('randomFactText').textContent = `${chosen.front} — ${chosen.back}`;
+      if (state.pawMode) playGentlePurr();
+    }
+
+    // Compute Quiz Match based on selected answers
+    function calculateQuizMatch() {
+      const { vibe, coat, trait } = state.quizAnswers;
+      if (!vibe || !coat || !trait) {
+        showToast('Please select one option in each of the 3 questions first!');
+        return;
+      }
+
+      const scores = {
+        ragdoll: 0,
+        scottishfold: 0,
+        bengal: 0,
+        sphynx: 0,
+        mainecoon: 0,
+        persian: 0
+      };
+
+      if (vibe === 'cozy') {
+        scores.ragdoll += 3;
+        scores.persian += 3;
+        scores.mainecoon += 1;
+      } else if (vibe === 'playful') {
+        scores.bengal += 3;
+        scores.mainecoon += 2;
+        scores.scottishfold += 1;
+      } else if (vibe === 'quirky') {
+        scores.sphynx += 3;
+        scores.scottishfold += 3;
+      }
+
+      if (coat === 'plush') {
+        scores.ragdoll += 2;
+        scores.persian += 2;
+        scores.mainecoon += 2;
+      } else if (coat === 'sleek') {
+        scores.bengal += 3;
+      } else if (coat === 'distinctive') {
+        scores.sphynx += 2;
+        scores.scottishfold += 2;
+      }
+
+      if (trait === 'gentle') {
+        scores.ragdoll += 2;
+        scores.mainecoon += 2;
+      } else if (trait === 'curious') {
+        scores.bengal += 2;
+        scores.sphynx += 2;
+      } else if (trait === 'chill') {
+        scores.persian += 2;
+        scores.scottishfold += 2;
+      }
+
+      let bestId = 'ragdoll';
+      let highest = -1;
+      Object.entries(scores).forEach(([id, pts]) => {
+        if (pts > highest) {
+          highest = pts;
+          bestId = id;
+        }
+      });
+
+      state.matchedBreedId = bestId;
+      const matchedBreed = breedsData.find((b) => b.id === bestId);
+
+      document.getElementById('quizResultArt').innerHTML = getBreedSvg(matchedBreed.id);
+      document.getElementById('quizMatchTitle').textContent = matchedBreed.name;
+      document.getElementById('quizMatchReason').textContent =
+        `${matchedBreed.tagline}! ${matchedBreed.description} Top traits: ${matchedBreed.temperament.join(', ')}.`;
+
+      const resultBox = document.getElementById('quizResultBox');
+      resultBox.classList.remove('hidden');
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      if (state.pawMode) playGentlePurr();
+      showToast(`Matched with ${matchedBreed.name}! 💖`);
+    }
+
+    // Initialize All Event Listeners on DOM Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderSpotlight();
+      renderBreeds();
+      renderFacts();
+
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuOpenIcon = document.getElementById('menuOpenIcon');
+      const menuCloseIcon = document.getElementById('menuCloseIcon');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden', isOpen);
+        menuOpenIcon.classList.toggle('hidden', !isOpen);
+        menuCloseIcon.classList.toggle('hidden', isOpen);
+        mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuOpenIcon.classList.remove('hidden');
+          menuCloseIcon.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // Paw Mode Toggle
+      const pawToggleBtn = document.getElementById('pawToggleBtn');
+      const pawToggleLabel = document.getElementById('pawToggleLabel');
+      pawToggleBtn.addEventListener('click', (e) => {
+        state.pawMode = !state.pawMode;
+        pawToggleBtn.setAttribute('aria-pressed', String(state.pawMode));
+        pawToggleLabel.textContent = state.pawMode ? 'Paw Mode: On' : 'Paw Mode: Off';
+        pawToggleBtn.classList.toggle('bg-bubblegum', state.pawMode);
+        pawToggleBtn.classList.toggle('text-white', state.pawMode);
+        pawToggleBtn.classList.toggle('bg-petal', !state.pawMode);
+        pawToggleBtn.classList.toggle('text-berry', !state.pawMode);
+
+        if (state.pawMode) {
+          playGentlePurr();
+          spawnPawPrint(e.clientX || 120, e.clientY || 60);
+          showToast('Paw Mode enabled! Tap anywhere for paw prints & gentle purrs.');
+        } else {
+          showToast('Paw Mode turned off.');
+        }
+      });
+
+      // Global click paw prints when Paw Mode is active
+      document.addEventListener('click', (e) => {
+        if (!state.pawMode) return;
+        if (e.target.closest('#pawToggleBtn')) return;
+        spawnPawPrint(e.clientX, e.clientY);
+      });
+
+      // Hero Spotlight Controls
+      document.getElementById('cycleSpotlightBtn').addEventListener('click', () => {
+        state.spotlightIndex = (state.spotlightIndex + 1) % breedsData.length;
+        renderSpotlight();
+        if (state.pawMode) playGentlePurr();
+      });
+
+      document.getElementById('spotlightDetailBtn').addEventListener('click', () => {
+        const current = breedsData[state.spotlightIndex % breedsData.length];
+        openBreedModal(current.id);
+      });
+
+      document.getElementById('boopBtn').addEventListener('click', () => {
+        state.boopCount += 1;
+        document.getElementById('boopCount').textContent = String(state.boopCount);
+        playGentlePurr();
+        showToast('Pink nose booped! Mrrp! 🌸');
+      });
+
+      document.getElementById('treatBtn').addEventListener('click', () => {
+        playGentlePurr();
+        showToast('Yummy salmon treat served! *Crunch purr* 🐟');
+      });
+
+      // Breed Category Tabs
+      document.querySelectorAll('.breed-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          state.selectedCategory = tab.getAttribute('data-category');
+          document.querySelectorAll('.breed-tab').forEach((t) => {
+            const active = t === tab;
+            t.setAttribute('aria-selected', String(active));
+            t.classList.toggle('bg-gradient-to-r', active);
+            t.classList.toggle('from-rosebud', active);
+            t.classList.toggle('to-magentaSoft', active);
+            t.classList.toggle('text-white', active);
+            t.classList.toggle('font-bold', active);
+            t.classList.toggle('bg-petal/70', !active);
+            t.classList.toggle('text-berry', !active);
+            t.classList.toggle('font-semibold', !active);
+          });
+          renderBreeds();
+        });
+      });
+
+      // Breed Search Input
+      document.getElementById('breedSearchInput').addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        renderBreeds();
+      });
+
+      document.getElementById('resetBreedsBtn').addEventListener('click', () => {
+        state.selectedCategory = 'all';
+        state.searchQuery = '';
+        document.getElementById('breedSearchInput').value = '';
+        document.querySelectorAll('.breed-tab').forEach((t, index) => {
+          const isFirst = index === 0;
+          t.setAttribute('aria-selected', String(isFirst));
+          t.classList.toggle('bg-gradient-to-r', isFirst);
+          t.classList.toggle('from-rosebud', isFirst);
+          t.classList.toggle('to-magentaSoft', isFirst);
+          t.classList.toggle('text-white', isFirst);
+          t.classList.toggle('font-bold', isFirst);
+          t.classList.toggle('bg-petal/70', !isFirst);
+          t.classList.toggle('text-berry', !isFirst);
+          t.classList.toggle('font-semibold', !isFirst);
+        });
+        renderBreeds();
+      });
+
+      // Modal Close Events
+      document.getElementById('closeModalBtn').addEventListener('click', closeBreedModal);
+      document.getElementById('breedModal').addEventListener('click', (e) => {
+        if (e.target.id === 'breedModal') closeBreedModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeBreedModal();
+      });
+
+      // Fun Facts Topic Filters & Random Fact Button
+      document.querySelectorAll('.fact-topic-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.selectedFactTopic = btn.getAttribute('data-topic');
+          document.querySelectorAll('.fact-topic-btn').forEach((b) => {
+            const active = b === btn;
+            b.classList.toggle('bg-berry', active);
+            b.classList.toggle('text-white', active);
+            b.classList.toggle('font-bold', active);
+            b.classList.toggle('bg-white', !active);
+            b.classList.toggle('text-berry', !active);
+            b.classList.toggle('font-semibold', !active);
+          });
+          renderFacts();
+          showRandomFact();
+        });
+      });
+
+      document.getElementById('randomFactBtn').addEventListener('click', showRandomFact);
+
+      // Quiz Option Selection
+      document.querySelectorAll('[data-q]').forEach((group) => {
+        const qKey = group.getAttribute('data-q');
+        group.querySelectorAll('.quiz-opt').forEach((opt) => {
+          opt.addEventListener('click', () => {
+            const val = opt.getAttribute('data-value');
+            state.quizAnswers[qKey] = val;
+
+            group.querySelectorAll('.quiz-opt').forEach((o) => {
+              const selected = o === opt;
+              o.classList.toggle('border-magentaSoft', selected);
+              o.classList.toggle('bg-petal', selected);
+              o.classList.toggle('shadow-sm', selected);
+              o.classList.toggle('border-petal', !selected);
+              o.classList.toggle('bg-blush/60', !selected);
+            });
+          });
+        });
+      });
+
+      document.getElementById('revealMatchBtn').addEventListener('click', calculateQuizMatch);
+
+      document.getElementById('resetQuizBtn').addEventListener('click', () => {
+        state.quizAnswers = { vibe: null, coat: null, trait: null };
+        document.querySelectorAll('.quiz-opt').forEach((o) => {
+          o.classList.remove('border-magentaSoft', 'bg-petal', 'shadow-sm');
+          o.classList.add('border-petal', 'bg-blush/60');
+        });
+        document.getElementById('quizResultBox').classList.add('hidden');
+        showToast('Quiz choices reset!');
+      });
+
+      document.getElementById('quizRetakeBtn').addEventListener('click', () => {
+        document.getElementById('quizResultBox').classList.add('hidden');
+        document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      document.getElementById('quizInspectBreedBtn').addEventListener('click', () => {
+        openBreedModal(state.matchedBreedId);
+      });
+
+      // Back to Top Button
+      document.getElementById('backToTopBtn').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
